@@ -15,11 +15,6 @@ const formFiltros = document.querySelector('#form-filtros');
 const inputBusqueda = document.querySelector('#busqueda');
 const selectTemporada = document.querySelector('#filtro-temporada');
 
-// R3 · Recibe UN episodio y devuelve el HTML de su tarjeta (modelos 1 y 2 de index.html).
-const tarjetaHTML = (episodio) => {
-  // TODO
-};
-
 // R2 · Estado de carga y estado de error (modelos 3 y 4 de index.html).
 const mostrarCargando = () => {
   lista.innerHTML = `<p class="col-span-full rounded-2xl bg-white p-8 text-center text-slate-500">Cargando episodios…</p>`;
@@ -49,10 +44,37 @@ const cargar = async () => {
   }
 };
 
+// R3 · Recibe UN episodio y devuelve el HTML de su tarjeta (modelos 1 y 2 de index.html).
+const tarjetaHTML = (episodio) => {
+  const esVisto = false;
+  
+  const articleClasses = esVisto 
+    ? 'flex flex-col gap-2 rounded-2xl bg-white p-5 shadow ring-2 ring-emerald-500' 
+    : 'flex flex-col gap-2 rounded-2xl bg-white p-5 shadow';
+    
+  const btnClasses = esVisto
+    ? 'mt-auto rounded-lg bg-emerald-600 py-2 font-semibold text-white hover:bg-emerald-700'
+    : 'mt-auto rounded-lg bg-indigo-600 py-2 font-semibold text-white hover:bg-indigo-700';
+    
+  const btnText = esVisto ? '✓ Visto' : 'Marcar como visto';
+
+  return `
+    <article class="${articleClasses}">
+      <span class="w-fit rounded-full bg-indigo-100 px-2.5 py-0.5 text-xs font-semibold text-indigo-700">${episodio.episode}</span>
+      <h3 class="text-lg font-bold">${episodio.name}</h3>
+      <p class="text-sm text-slate-500">Emitido: ${episodio.air_date}</p>
+      <p class="text-sm text-slate-500">${episodio.characters.length} personajes</p>
+      <button type="button" data-id="${episodio.id}" class="${btnClasses}">
+        ${btnText}
+      </button>
+    </article>
+  `;
+};
+
 // R3 + R4 + R5 · ESTADO → pantalla: filtra, pinta las tarjetas (o el estado vacío, modelo 5)
 // y actualiza el contador con el formato «7 de 20 episodios · 187 personajes».
 const render = () => {
-  // TODO
+  lista.innerHTML = episodios.map(tarjetaHTML).join('');
 };
 
 
