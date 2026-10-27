@@ -75,6 +75,8 @@ const tarjetaHTML = (episodio) => {
 // y actualiza el contador con el formato «7 de 20 episodios · 187 personajes».
 const render = () => {
   const visibles = filtrarEpisodios(episodios, filtros);
+  const totalPersonajes = contarPersonajes(visibles);
+  contador.textContent = `${visibles.length} de ${episodios.length} episodios · ${totalPersonajes} personajes`;
   if (visibles.length === 0) {
     lista.innerHTML = `<p class="col-span-full rounded-2xl bg-white p-8 text-center text-slate-500">Ningún episodio coincide con la búsqueda.</p>`;
   } else {
