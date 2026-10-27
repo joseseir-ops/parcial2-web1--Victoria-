@@ -4,7 +4,12 @@
 // al inicio o al final) y cuyo código episode (S01E01…) empieza por `temporada`.
 // temporada === '' significa «todas las temporadas».
 export const filtrarEpisodios = (lista, { texto, temporada }) => {
-  // TODO: usa filter
+  const buscado = texto.trim().toLowerCase();
+  return lista.filter((episodio) => {
+    const coincideTexto = episodio.name.toLowerCase().includes(buscado);
+    const coincideTemporada = temporada === '' || episodio.episode.startsWith(temporada);
+    return coincideTexto && coincideTemporada;
+  });
 };
 
 // R5 · Suma la cantidad de personajes (characters.length) de todos los episodios de la lista.

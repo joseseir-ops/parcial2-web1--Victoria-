@@ -74,12 +74,25 @@ const tarjetaHTML = (episodio) => {
 // R3 + R4 + R5 · ESTADO → pantalla: filtra, pinta las tarjetas (o el estado vacío, modelo 5)
 // y actualiza el contador con el formato «7 de 20 episodios · 187 personajes».
 const render = () => {
-  lista.innerHTML = episodios.map(tarjetaHTML).join('');
+  const visibles = filtrarEpisodios(episodios, filtros);
+  if (visibles.length === 0) {
+    lista.innerHTML = `<p class="col-span-full rounded-2xl bg-white p-8 text-center text-slate-500">Ningún episodio coincide con la búsqueda.</p>`;
+  } else {
+    lista.innerHTML = visibles.map(tarjetaHTML).join('');
+  }
 };
-
 
 // R4 · Eventos del buscador (input), del select (change) y del formulario (Enter NO recarga).
 // TODO
+inputBusqueda.addEventListener('input', (evento) => {
+  filtros.texto = evento.target.value;
+  render();
+});
+selectTemporada.addEventListener('change', (evento) => {
+  filtros.temporada = evento.target.value;
+  render(); 
+});
+formFiltros.addEventListener('submit', (evento) => evento.preventDefault());
 
 // R6 · UN solo listener en #lista (delegación) que atienda el botón de cada tarjeta
 // y también el botón Reintentar.
