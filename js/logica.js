@@ -15,13 +15,14 @@ export const filtrarEpisodios = (lista, { texto, temporada }) => {
 // R5 · Suma la cantidad de personajes (characters.length) de todos los episodios de la lista.
 // Usa reduce.
 export const contarPersonajes = (lista) => {
-  return lista.reduce((total, episodio) => {
-    return total + episodio.characters.length;
-  }, 0);
+  return lista.reduce((total, episodio) => total + episodio.characters.length, 0);
 };
 
 // R6 · Si id está en ids, devuelve un array NUEVO sin él; si no está, un array NUEVO con él.
 // No modifiques el array que recibes.
 export const alternarId = (ids, id) => {
-  // TODO
+  if (ids.includes(id)) {
+    return ids.filter((elemento) => elemento !== id);
+  }
+  return [...ids, id];
 };

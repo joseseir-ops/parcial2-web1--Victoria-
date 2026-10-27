@@ -46,7 +46,7 @@ const cargar = async () => {
 
 // R3 · Recibe UN episodio y devuelve el HTML de su tarjeta (modelos 1 y 2 de index.html).
 const tarjetaHTML = (episodio) => {
-  const esVisto = false;
+  const esVisto = vistos.includes(episodio.id);
   
   const articleClasses = esVisto 
     ? 'flex flex-col gap-2 rounded-2xl bg-white p-5 shadow ring-2 ring-emerald-500' 
@@ -98,6 +98,19 @@ formFiltros.addEventListener('submit', (evento) => evento.preventDefault());
 
 // R6 · UN solo listener en #lista (delegación) que atienda el botón de cada tarjeta
 // y también el botón Reintentar.
-// TODO
 
+lista.addEventListener('click', (evento) => {
+  if (evento.target.closest('#btn-reintentar')) {
+    cargar(); 
+    return;
+  }
+
+  const botonTarjeta = evento.target.closest('[data-id]');
+  if (botonTarjeta) {
+    const id = Number(botonTarjeta.dataset.id);
+    vistos = alternarId(vistos, id);
+    guardarVistos(vistos);
+    render();
+  }
+});
 cargar();
